@@ -1,0 +1,133 @@
+.form-container {
+    max-width: 450px;
+    height: 625px;
+    margin: 0 auto;
+    padding: 24px;
+    background: white;
+    border-radius: 12px;
+}
+
+.form-header {
+    margin-bottom: 32px;
+    text-align: left;
+}
+
+.form-header h2 {
+    color: var(--primary-color-blue-0);
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+}
+
+.form-header p {
+    color: var(--neutral-color-grey-40);
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.continue-btn {
+    width: 222px;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--primary-color-blue-0);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0px;
+}
+button:disabled {
+  background-color: var(--primary-color-blue-20);
+  color: var(--neutral-color-grey-40);
+  cursor: not-allowed;
+}
+
+input {
+    margin-left: 20px;
+}
+
+
+::ng-deep .mat-datepicker-content {
+    background-color: #FFFFFF !important; // Personalized background
+}
+
+::ng-deep .mat-calendar-body-selected {
+    background-color: #673ab7 !important; // Color of the circle (e.g. purple)
+    color: #FFFFFF !important; // Text of the selected day
+}
+
+::ng-deep .mat-calendar-body-cell {
+    font-weight: 500;
+}
+
+::ng-deep .mat-calendar-period-button,
+::ng-deep .mat-calendar-previous-button,
+::ng-deep .mat-calendar-next-button {
+    color: #333 !important; // Color of arrows and buttons
+}
+
+::ng-deep .mat-datepicker-toggle-default-icon {
+    color: var(--primary-color-blue-0); // morado
+}
+
+// Custom styles for the chip list  
+.chip-list {
+  width: 100%;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  width: 100%;
+  height: 100%;
+}
+
+.mat-mdc-option {
+  padding: 0;
+  height: 50px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 12px;
+}
+
+.hobbie-input {
+  background-color: white;
+}
+.error-message {
+     margin-top: 16px;
+     padding: 12px;
+     background-color: #ffebee;
+     color: #c62828;
+     border-radius: 4px;
+     border-left: 4px solid #f44336;
+ }
+
+
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form-container {
+        margin: 16px;
+        padding: 20px;
+    }
+
+}

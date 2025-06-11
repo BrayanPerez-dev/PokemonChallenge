@@ -1,0 +1,42 @@
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+}
+.block-arrow-title{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+        width: 100%;
+}
+
+.arrow-left-icon{
+  color:var( --primary-color-blue-0);
+  cursor: pointer     
+}
+
+.title{
+    color: var(--primary-color-blue-10);
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.subtitle{
+    color: var(--neutral-color-grey-40);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0;
+    vertical-align: middle;
+    padding-left: 2rem ;
+}

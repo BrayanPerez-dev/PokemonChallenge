@@ -1,0 +1,35 @@
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>
+      @if(userInfo?.name){
+      <p class="name-user">{{ userInfo?.name }}</p>
+      }@else{
+      <p class="without-user">Imágen perfil</p>
+      }
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="container">
+      <div class="profile-picture-container">
+        <div class="inner-circle">
+          @if (uploadedImageUrl || userInfo?.photo) {
+          <img
+            [src]="uploadedImageUrl || userInfo?.photo"
+            alt="profile picture"
+            class="preview-image"
+          />
+          } @else {
+          <img src="assets/avatar.png" alt="avatar" class="avatar" />
+          }
+        </div>
+      </div>
+      @if(userInfo?.name){
+      <app-user-info></app-user-info>
+      }@else{
+      <app-image-upload
+        (uploadedImageUrl)="onImageUploaded($event)"
+      ></app-image-upload>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,97 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>Tu información</h2>
+    <p>Completa la siguiente información para completar tu perfil</p>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="José Sosa" />
+      @if(userForm.get('name')?.hasError('required')){
+      <mat-error> El nombre es requerido </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="chip-list" appearance="outline" class="full-width">
+      <mat-label>Pasatiempo favorito</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Hobbie selection">
+        @for (hobbie of hobbies; track hobbie) {
+        <mat-chip-row (removed)="remove(hobbie)">
+          {{ hobbie }}
+          <button matChipRemove [attr.aria-label]="'remove ' + hobbie">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+        }
+      </mat-chip-grid>
+      <input
+        placeholder="Nuevo asatiempo..."
+        #hobbieInput
+        [formControl]="hobbieCtrl"
+        [matChipInputFor]="chipGrid"
+        [matAutocomplete]="auto"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (hobbie of filteredHobbies | async; track hobbie) {
+        <mat-option [value]="hobbie">
+          <div
+            class="option"
+            (click)="$event.stopPropagation(); selected(hobbie)"
+          >
+            {{ hobbie }}
+          </div>
+        </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cumpleaños</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthday"  />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+      @if(userForm.get('birthday')?.hasError('required')){
+      <mat-error> La fecha de cumpleaños es requerida </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Documento</mat-label>
+      <input
+        matInput
+        formControlName="dui"
+        placeholder="00000000-0"
+        [value]="dui"
+        (input)="onDuiInput($event)"
+        maxlength="10"
+      />
+      @if(userForm.get('dui')?.hasError('required')){
+      <mat-error> El documento es requerido </mat-error>
+      } @if(userForm.get('dui')?.hasError('invalidDui')){
+      <mat-error>
+        El documento debe tener 9 dígitos numéricos reales
+      </mat-error>
+      }
+    </mat-form-field>
+    @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+    }
+    <div class="button-container">
+      <button
+        color="primary"
+        type="submit"
+        class="continue-btn"
+        [disabled]="!userForm.valid"
+      >
+        Continuar
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,130 @@
+ .image-upload-container {
+     padding: 15px;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     width: 300px;
+ }
+
+ .upload-area {
+     display: flex;
+     align-items: center;
+     border: 2px dashed var(--primary-color-blue);
+     border-radius: 12px;
+     background-color: #FFFFFF;
+     padding: 25px 20px;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     position: relative;
+     overflow: hidden;
+ }
+
+ .upload-content {
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     gap: 20px;
+ }
+ 
+ .upload-text {
+     font-size: 14px;
+     font-weight: 500;
+     color: var(--primary-color-blue-30);
+     margin: 0;
+ }
+
+
+ .loading-indicator {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 16px;
+     padding: 20px;
+     text-align: center;
+ }
+
+ .loading-indicator p {
+     margin: 0px;
+ }
+
+ .spinner {
+     width: 40px;
+     height: 40px;
+     border: 4px solid var(--primary-color-blue-40);
+     border-top: 4px solid var(--primary-color-orange-20);
+     border-radius: 50%;
+     animation: spin 1s linear infinite;
+ }
+
+ @keyframes spin {
+     0% {
+         transform: rotate(0deg);
+     }
+
+     100% {
+         transform: rotate(360deg);
+     }
+ }
+
+ .error-message {
+     margin-top: 16px;
+     padding: 12px;
+     background-color: #ffebee;
+     color: #c62828;
+     border-radius: 4px;
+     border-left: 4px solid #f44336;
+ }
+
+
+
+// Styles for the file delete
+ .file-preview {
+     border-radius: 8px;
+     background-color: #ffffff;
+     padding: 25px 16px;
+     border: 2px dashed var(--primary-color-blue);
+ }
+
+ .file-info {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+ }
+
+ .file-details {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     flex: 1;
+ }
+
+ .file-name {
+     font-size: 14px;
+     color: var(--primary-color-blue-30);
+     font-weight: 500;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     max-width: 200px;
+ }
+
+ .delete-btn {
+     background: none;
+     border: none;
+     cursor: pointer;
+     padding: 4px;
+     border-radius: 4px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transition: background-color 0.2s ease;
+
+     &:hover {
+         background-color: #fee2e2;
+     }
+
+     &:active {
+         transform: scale(0.95);
+     }
+ }
