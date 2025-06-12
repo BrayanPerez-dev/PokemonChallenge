@@ -1,0 +1,135 @@
+.title {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 48px;
+    color: var(--primary-color-blue-0);
+    margin: 0px;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: var(--neutral-color-grey-40);
+}
+
+.input-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--primary-color-blue-0);
+  font-size: 16px;
+}
+
+.search-input {
+  padding-left: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.search-input {
+    width: 521px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: var(--neutral-color-grey-10);
+    border: 0px;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #00000066;
+}
+
+
+
+
+.pokemon-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 75px;
+    grid-row-gap: 50px;
+    margin-top: 50px;
+}
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 162px;
+    height: 96px;
+    border-radius: 20px;
+    background-color: var(--neutral-color-grey-10);
+}
+
+.pokemon-selected {
+    background-color: var(--primary-color-orange-20);
+}
+
+.pokemon-sprite {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.chip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 135px;
+    height: 25px;
+    border-radius: 10px;
+    background-color: var(--primary-color-blue-0);
+    margin-bottom: 20px;
+}
+
+.pokemon-name {
+    font-weight: 800;
+    font-size: 12px;
+    margin: 0px;
+    color: #FFFFFF !important;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.save-btn {
+    width: 222px;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--primary-color-blue-0);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0px;
+    border: 0px ;
+}
+
+button:disabled {
+    background-color: var(--primary-color-blue-20);
+    color: var(--neutral-color-grey-40);
+    cursor: not-allowed;
+}
+
+.error-message {
+     margin-top: 16px;
+     padding: 12px;
+     background-color: var(--primary-color-blue-0);
+     color: #FFFFFF;
+     border-radius: 4px;
+     border-left: 4px solid var(--primary-color-orange-20);
+ }

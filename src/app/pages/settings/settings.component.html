@@ -17,7 +17,11 @@
 
     <section>
       <app-profile-picture></app-profile-picture>
-      @if(userExists){ pokemons }@else{
+      @if(userExists){ @if(pokemons.length > 0){
+      <app-list-saved-pokemon></app-list-saved-pokemon>
+      }@else{
+      <app-pokemon-list></app-pokemon-list>
+      } }@else{
       <app-user-profile-form></app-user-profile-form>
       }
     </section>

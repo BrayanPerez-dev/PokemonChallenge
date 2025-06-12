@@ -1,0 +1,32 @@
+.container-progress {
+    width: 300px;
+}
+
+.progress-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 8px;
+}
+
+.progress-label {
+    font-weight: 400;
+    font-size: 16px;
+    white-space: nowrap;
+    max-width: 100px;
+    width: 100px;
+    text-align: left;
+    flex-shrink: 0;
+    color: #4B4B4B;
+}
+
+.name-stat {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: #4B4B4B;
+}
+
+mat-progress-bar {
+    flex-grow: 1;
+}

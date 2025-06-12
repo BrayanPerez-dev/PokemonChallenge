@@ -1,0 +1,19 @@
+<p class="title">Mis Pokémon</p>
+
+<div class="container-card">
+  @for(pokemon of pokemons; track pokemon.name){
+  <div class="card-pokemon">
+    <div class="profile">
+      <img
+        [src]="pokemon.sprites.other.home.front_default"
+        alt="{{ pokemon.name }}"
+        class="pokemon-sprite"
+      />
+      <p class="pokemon-name">{{ pokemon.name }}</p>
+      <p class="types">{{setTypes(pokemon)}}</p>
+    </div>
+    <app-stats [stats]="pokemon.stats"></app-stats>
+
+  </div>
+  }
+</div>

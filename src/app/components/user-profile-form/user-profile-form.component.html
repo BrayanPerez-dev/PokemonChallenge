@@ -49,17 +49,18 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Cumpleaños</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="birthday"  />
+      <input matInput [matDatepicker]="picker" formControlName="birthday" />
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker"
       ></mat-datepicker-toggle>
-      <mat-datepicker #picker ></mat-datepicker>
+      <mat-datepicker #picker></mat-datepicker>
       @if(userForm.get('birthday')?.hasError('required')){
       <mat-error> La fecha de cumpleaños es requerida </mat-error>
       }
     </mat-form-field>
 
+    @if(isAdult){
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Documento</mat-label>
       <input
@@ -78,7 +79,13 @@
       </mat-error>
       }
     </mat-form-field>
-    @if (errorMessage) {
+    } @if(!isAdult){
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Carnet de Minoridad</mat-label>
+      <input matInput formControlName="minority_card" placeholder="000000000" />
+      
+    </mat-form-field>
+    } @if (errorMessage) {
     <div class="error-message">
       {{ errorMessage }}
     </div>

@@ -61,6 +61,7 @@ export class UserProfileFormComponent implements OnInit {
   hobbieCtrl = new FormControl('');
   separatorKeysCodes: number[] = [ENTER, COMMA];
   errorMessage = '';
+  isAdult: boolean = false;
 
   fb = inject(FormBuilder);
   announcer = inject(LiveAnnouncer);
@@ -74,12 +75,28 @@ export class UserProfileFormComponent implements OnInit {
     this.userForm = this.fb.nonNullable.group({
       name: this.fb.nonNullable.control('', [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(60),
       ]),
       birthday: this.fb.nonNullable.control('', [Validators.required]),
-      dui: this.fb.nonNullable.control('', [Validators.required, duiValidator]),
+      dui: this.fb.nonNullable.control('', [duiValidator]),
+      minority_card: this.fb.nonNullable.control('')
     });
+    this.userForm.get('birthday')?.valueChanges.subscribe(value => {
+      this.isAdult = this.translateDateToYears(value as string).isAdult
+      const duiControl = this.userForm.get('dui');
+      const carnetControl = this.userForm.get('minority_card');
+
+      if (this.isAdult ) {
+        duiControl?.setValidators([Validators.required, duiValidator]);
+        carnetControl?.clearValidators();
+        carnetControl?.reset();
+      } else {
+        duiControl?.clearValidators();
+        duiControl?.reset();
+      }
+
+      duiControl?.updateValueAndValidity();
+      carnetControl?.updateValueAndValidity();
+    })
 
     this.filteredHobbies = this.hobbieCtrl.valueChanges.pipe(
       startWith(null),
@@ -144,15 +161,15 @@ export class UserProfileFormComponent implements OnInit {
     this.userForm.get('dui')?.setValue(this.dui, { emitEvent: false });
   }
 
-   onSubmit() {
+  onSubmit() {
     if (this.userForm.valid) {
       console.log('Form sent:', {
         ...this.userForm.value,
         hobbies: this.hobbies,
       });
-      const { name, birthday, dui } = this.userForm.value;
-      let photo: string | null =this.userService.getUserPhoto()
-    
+      const { name, birthday, dui,minority_card } = this.userForm.value;
+      let photo: string | null = this.userService.getUserPhoto()
+
 
       if (!photo) {
         this.errorMessage = 'Por favor selecciona una de foto.';
@@ -161,14 +178,15 @@ export class UserProfileFormComponent implements OnInit {
       this.errorMessage = '';
       this.loadingService.show();
 
-     
+
       this.userService
         .setUser({
           name: name as string,
-          birthday: this.translateDateToYears(birthday as string),
+          birthday: this.translateDateToYears(birthday as string).label,
           dui: dui as string,
           hobbies: this.hobbies,
           photo: photo,
+          minority_card: minority_card
         })
         .subscribe({
           next: (res) => {
@@ -190,7 +208,7 @@ export class UserProfileFormComponent implements OnInit {
     }
   }
 
-  translateDateToYears(dateISO: string): string {
+  translateDateToYears(dateISO: string): Age {
     const dateBirth = new Date(dateISO);
     const date = new Date();
 
@@ -210,6 +228,14 @@ export class UserProfileFormComponent implements OnInit {
       age--;
     }
 
-    return `${age} años`;
+    return {
+      label: `${age} años`,
+      isAdult: age >= 18
+    };
   }
+}
+
+interface Age {
+  label: string;
+  isAdult: boolean
 }

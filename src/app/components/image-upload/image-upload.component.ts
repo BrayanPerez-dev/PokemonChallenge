@@ -14,7 +14,7 @@ export class ImageUploadComponent {
   isUploading = false;
   uploadedFileName: string = '';
   errorMessage = '';
-  private imgbbService = inject(ImgbbService);
+  private imgbbService$ = inject(ImgbbService);
   private userService = inject(UserInfoService);
   @Output() uploadedImageUrl: EventEmitter<string> = new EventEmitter<string>();
 
@@ -61,7 +61,7 @@ export class ImageUploadComponent {
     this.uploadedImageUrl.emit('');
     this.uploadedFileName = '';
 
-    this.imgbbService.uploadImage(file).subscribe({
+    this.imgbbService$.uploadImage(file).subscribe({
       next: (response: IImgBBResponse) => {
         this.isUploading = false;
         if (response.success) {

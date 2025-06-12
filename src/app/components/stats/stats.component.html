@@ -1,0 +1,11 @@
+<div class="container-progress">
+  @for(stat of stats; track stat.name){
+  <div class="progress-row">
+    <span class="progress-label">
+      {{ statLabels[stat.stat.name] || stat.stat.name }}
+    </span>
+    <mat-progress-bar mode="determinate" [value]="getPercentage(stat)">
+    </mat-progress-bar>
+  </div>
+  }
+</div>
