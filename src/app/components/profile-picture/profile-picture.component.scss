@@ -14,6 +14,24 @@ mat-card-header.mat-mdc-card-header {
     padding: 40px 0px 40px 0px;
 }
 
+.trainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 300px;
+    p {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 100%;
+        color: #4B4B4B;
+        margin: 0px;
+    }
+
+    img {
+        width: 75px;
+    }
+}
+
 .name-user {
     font-weight: 700;
     font-size: 35px;
@@ -39,6 +57,7 @@ mat-card-header.mat-mdc-card-header {
     flex-direction: column;
     align-items: center;
 }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -46,6 +65,7 @@ mat-card-header.mat-mdc-card-header {
     align-items: center;
     gap: 40px;
 }
+
 .profile-picture-container {
     width: 269px;
     height: 269px;

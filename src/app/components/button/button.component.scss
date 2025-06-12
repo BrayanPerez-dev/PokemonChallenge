@@ -1,0 +1,13 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 134px;
+    height: 30px;
+    border-radius: 10px;
+    border-width: 1px;
+    border: 1px solid var(--primary-color-blue-0);
+    background-color: #FFFFFF;
+    align-items: center;
+    gap: 10px;
+}

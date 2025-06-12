@@ -21,11 +21,12 @@
 .input-with-icon .icon {
   position: absolute;
   left: 10px;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--primary-color-blue-0);
   font-size: 16px;
+  font-weight: 600;
 }
 
 .search-input {

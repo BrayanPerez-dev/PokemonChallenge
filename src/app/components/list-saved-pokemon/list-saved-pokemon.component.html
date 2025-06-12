@@ -1,19 +1,24 @@
+<span class="title-button">
 <p class="title">Mis Pokémon</p>
-
+<app-button>
+    <mat-icon class="prefix-icon">edit</mat-icon>
+    <p class="text">Editar</p>
+</app-button>
+</span>
+<br>
 <div class="container-card">
-  @for(pokemon of pokemons; track pokemon.name){
+  @for(pokemonItem of pokemon; track pokemonItem.name){
   <div class="card-pokemon">
     <div class="profile">
       <img
-        [src]="pokemon.sprites.other.home.front_default"
-        alt="{{ pokemon.name }}"
+        [src]="pokemonItem.sprites.other.home.front_default"
+        alt="{{ pokemonItem.name }}"
         class="pokemon-sprite"
       />
-      <p class="pokemon-name">{{ pokemon.name }}</p>
-      <p class="types">{{setTypes(pokemon)}}</p>
+      <p class="pokemon-name">{{ pokemonItem.name }}</p>
+      <p class="types">{{ setTypes(pokemonItem) }}</p>
     </div>
-    <app-stats [stats]="pokemon.stats"></app-stats>
-
+    <app-stats [stats]="pokemonItem.stats"></app-stats>
   </div>
   }
 </div>

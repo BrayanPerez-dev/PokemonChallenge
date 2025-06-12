@@ -6,6 +6,7 @@ import { BehaviorSubject, delay, Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class UserInfoService {
+  
   private userSubject = new BehaviorSubject<IUser | null>(
     this.getFromStorage()
   );
@@ -38,6 +39,7 @@ export class UserInfoService {
     }
     return null;
   }
+
   getUser(): IUser | null {
     return this.userSubject.getValue() || this.getFromStorage();
   }

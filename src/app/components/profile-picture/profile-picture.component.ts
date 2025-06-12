@@ -4,17 +4,22 @@ import { ImageUploadComponent } from '../image-upload/image-upload.component';
 import { UserInfoService } from '../../services/UserInfo/user-info.service';
 import { IUser } from '../../interfaces/IUser';
 import { UserInfoComponent } from '../user-info/user-info.component';
+import { SelectedPokemonService } from '../../services/SelectedPokemon/selected-pokemon.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile-picture',
-  imports: [MatCardModule,ImageUploadComponent,UserInfoComponent],
+  imports: [MatCardModule,ImageUploadComponent,UserInfoComponent,AsyncPipe],
   templateUrl: './profile-picture.component.html',
   styleUrl: './profile-picture.component.scss'
 })
 export class ProfilePictureComponent {
-  
-  uploadedImageUrl: string = '';
   private userService = inject(UserInfoService);
+  private selectedPokemonService = inject(SelectedPokemonService)
+
+  hasPokemon$ = this.selectedPokemonService.hasThreePokemons$;
+
+  uploadedImageUrl: string = '';
   userInfo:IUser | null = null;
 
    ngOnInit(): void {

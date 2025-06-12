@@ -13,12 +13,13 @@ import {
 } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { SelectedPokemonService } from '../../services/SelectedPokemon/selected-pokemon.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoadingService } from '../../services/Loading/loading.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-pokemon-list',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,MatIconModule, AsyncPipe],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss',
   standalone: true,
@@ -31,8 +32,9 @@ export class PokemonListComponent implements OnInit {
   pokemonList: IPokemon[] = [];
   searchTerm: string = '';
   errorMessage: string = '';
+  selectedPokemon$ = this.selectedPokemonService.selectedPokemons$;
 
-  private searchSubject = new Subject<string>();
+  private searchSubject$ = new Subject<string>();
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -41,30 +43,32 @@ export class PokemonListComponent implements OnInit {
     this.startDebounce();
   }
 
-  toggle(pokemon: IPokemon): void {
-    this.selectedPokemonService.togglePokemonSelection(pokemon);
+  togglePokemon(pokemon: IPokemon): void {
+    this.selectedPokemonService.togglePokemon(pokemon);
   }
 
   isSelected(pokemon: IPokemon): boolean {
     return this.selectedPokemonService.isSelected(pokemon);
   }
 
-  isSaveDisabled(): boolean {
-    return this.selectedPokemonService.isSaveDisabled();
-  }
 
-  continue(): void {
-    if (this.isSaveDisabled()) return;
-
+  savePokemon(): void {
     this.loadingService.show();
-
-    setTimeout(() => {
-      this.loadingService.hide();
-    }, 1000);
+    this.selectedPokemonService.saveToLocalStorage().subscribe({
+      next: (message) => {
+        console.log(message); 
+      },
+      error: (err) => {
+        console.error('error:', err);
+      },
+      complete: () => {
+        this.loadingService.hide();
+      }
+    });
   }
 
   startDebounce() {
-    this.searchSubject
+    this.searchSubject$
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
@@ -121,11 +125,12 @@ export class PokemonListComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-    this.searchSubject.next(value);
+    this.searchSubject$.next(value);
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
 }

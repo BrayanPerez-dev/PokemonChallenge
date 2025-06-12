@@ -1,3 +1,12 @@
 <header>
-<img  src="/assets/logo.png" alt="logo" />
+  <img src="/assets/logo.png" alt="logo" />
+ @if(hasPokemon$ | async){
+  <span class="user-search">
+    <app-button>
+      <p class="text">{{ userInfo?.name }}</p>
+      <mat-icon class="suffix-icon icon">keyboard_arrow_down</mat-icon>
+    </app-button>
+    <mat-icon class="icon">search</mat-icon>
+  </span>
+  }
 </header>

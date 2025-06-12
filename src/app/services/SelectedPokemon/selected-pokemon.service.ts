@@ -1,47 +1,66 @@
 import { Injectable } from '@angular/core';
 import { IPokemon } from '../../interfaces/IPokemon';
+import { BehaviorSubject, delay, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectedPokemonService {
   private localStorageKey = 'selectedPokemons';
-  private selectedPokemons: IPokemon[] = [];
+  private selectedPokemonsSubject = new BehaviorSubject<IPokemon[]>(this.loadFromLocalStorage());
+  private hasThreePokemonsSubject = new BehaviorSubject<boolean>(false);
+  
+  selectedPokemons$ = this.selectedPokemonsSubject.asObservable();
+  hasThreePokemons$ = this.hasThreePokemonsSubject.asObservable();
 
-  togglePokemonSelection(pokemon: IPokemon): void {
-    const selectedPokemons = this.getSavedPokemons();
-    const index = selectedPokemons.findIndex(p => p.name === pokemon.name);
+  constructor() {
+    this.initializeFromLocalStorage();
+  }
+
+  initializeFromLocalStorage(): void {
+    const pokemon = this.loadFromLocalStorage();
+    this.selectedPokemonsSubject.next(pokemon);
+    this.hasThreePokemonsSubject.next(pokemon.length === 3);
+  }
+
+  togglePokemon(pokemon: IPokemon): void {
+    const current = this.selectedPokemonsSubject.getValue();
+    const index = current.findIndex(p => p.name === pokemon.name);
+
+    let updated: IPokemon[];
 
     if (index > -1) {
       // Deselect
-      selectedPokemons.splice(index, 1);
-    } else if (selectedPokemons.length < 3) {
+      updated = [...current.slice(0, index), ...current.slice(index + 1)];
+    } else if (current.length < 3) {
       // Select
-      selectedPokemons.push(pokemon);
+      updated = [...current, pokemon];
+    } else {
+      return; // Do not select more than 3
     }
 
-    this.saveToLocalStorage(selectedPokemons);
+    this.selectedPokemonsSubject.next(updated);
+  }
+
+  saveToLocalStorage(): Observable<string> {
+    const current = this.selectedPokemonsSubject.getValue();
+    localStorage.setItem(this.localStorageKey, JSON.stringify(current));
+    this.initializeFromLocalStorage()
+    return of('Pokemon saved successfully').pipe(delay(500));
   }
 
   clear(): void {
     localStorage.removeItem(this.localStorageKey);
-    this.selectedPokemons = [];
+    this.selectedPokemonsSubject.next([]);
   }
 
-  getSavedPokemons(): IPokemon[] {
+  private loadFromLocalStorage(): IPokemon[] {
     const data = localStorage.getItem(this.localStorageKey);
     return data ? JSON.parse(data) : [];
   }
 
   isSelected(pokemon: IPokemon): boolean {
-    return this.getSavedPokemons().some(p => p.name === pokemon.name);
+    return this.selectedPokemonsSubject.getValue().some(p => p.name === pokemon.name);
   }
-
-  isSaveDisabled(): boolean {
-    return this.getSavedPokemons().length !== 3;
-  }
-
-  private saveToLocalStorage(pokemons: IPokemon[]): void {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(pokemons));
-  }
+  
 }

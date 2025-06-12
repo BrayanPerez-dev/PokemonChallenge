@@ -1,9 +1,14 @@
 <mat-card class="profile-card">
   <mat-card-header>
     <mat-card-title>
-      @if(userInfo?.name){
-      <p class="name-user">{{ userInfo?.name }}</p>
+      @if(userInfo?.name){ @if(hasPokemon$ | async){
+      <span class="trainer">
+        <p>Entrenador</p>
+        <img src="assets/medal.png" alt="medal" />
+      </span>
       }@else{
+      <p class="name-user">{{ userInfo?.name }}</p>
+      } }@else{
       <p class="without-user">Imágen perfil</p>
       }
     </mat-card-title>

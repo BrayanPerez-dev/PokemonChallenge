@@ -11,3 +11,23 @@ img {
     width: 138px;
     height: 51px;
 }
+.user-search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.icon {
+    color: var(--primary-color-blue-0);
+    font-size: 20px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.text {
+    font-weight: 600;
+    font-size: 12px;
+    margin: 0px;
+    color: var(--primary-color-blue-0);
+}

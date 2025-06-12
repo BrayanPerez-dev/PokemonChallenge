@@ -9,10 +9,10 @@ import { UserInfoService } from '../../services/UserInfo/user-info.service';
   styleUrl: './user-info.component.scss',
 })
 export class UserInfoComponent implements OnInit {
-  private userService = inject(UserInfoService);
+  private userService$ = inject(UserInfoService);
   userInfo:IUser | null = null;
   ngOnInit(): void {
-    this.userService.user$.subscribe((user: IUser | null) => {
+    this.userService$.user$.subscribe((user: IUser | null) => {
       if (user) {
         this.userInfo = user
       } 

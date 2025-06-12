@@ -9,7 +9,10 @@ import { UserInfoService } from '../../services/UserInfo/user-info.service';
 import { PokemonListComponent } from '../../components/pokemon-list/pokemon-list.component';
 import { ListSavedPokemonComponent } from '../../components/list-saved-pokemon/list-saved-pokemon.component';
 import { SelectedPokemonService } from '../../services/SelectedPokemon/selected-pokemon.service';
-import { IPokemon } from '../../interfaces/IPokemon';
+import { IUser } from '../../interfaces/IUser';
+import { ButtonComponent } from '../../components/button/button.component';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-settings',
@@ -20,30 +23,44 @@ import { IPokemon } from '../../interfaces/IPokemon';
     LoadingComponent,
     PokemonListComponent,
     ListSavedPokemonComponent,
+    ButtonComponent,
+    MatIconModule,
     AsyncPipe,
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent implements OnInit {
-  loadingService = inject(LoadingService);
-  userService = inject(UserInfoService);
-  selectedPokemonService = inject(SelectedPokemonService)
-  
+  private loadingService = inject(LoadingService);
+  private userService = inject(UserInfoService);
+  private selectedPokemonService = inject(SelectedPokemonService)
+
   loading$ = this.loadingService.loading$;
+  hasPokemon$ = this.selectedPokemonService.hasThreePokemons$;
+  
+  showStepLabel:boolean = false
   userExists: boolean = false;
-  pokemons:IPokemon[] =[]
+  userInfo:IUser | null = null;
 
   ngOnInit(): void {
     this.userService.user$.subscribe({
       next: (user) => {
         if (user?.name) {
           this.userExists = true;
+          this.userInfo = user
         } else {
           this.userExists = false;
         }
       },
     });
-   this.pokemons =  this.selectedPokemonService.getSavedPokemons()
+    
+    this.selectedPokemonService.hasThreePokemons$.subscribe({
+      next:(pokemon)=>{
+        console.log(pokemon)
+        this.showStepLabel = pokemon
+      }
+    })
+
   }
+
 }

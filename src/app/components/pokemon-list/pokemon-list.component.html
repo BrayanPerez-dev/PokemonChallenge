@@ -2,7 +2,8 @@
 <p class="subtitle">Selecciona 3 Pokémon para que sean parte de tu equipo</p>
 <div class="search-container">
   <div class="input-with-icon">
-    <span class="material-icons icon"> search </span>
+    <mat-icon class="icon">search</mat-icon>
+
     <input
       type="text"
       [(ngModel)]="searchTerm"
@@ -17,7 +18,7 @@
   @for(pokemon of (pokemonList); track pokemon.name; let i = $index){
   <div
     [ngClass]="isSelected(pokemon) ? 'pokemon pokemon-selected' : 'pokemon'"
-    (click)="toggle(pokemon)"
+    (click)="togglePokemon(pokemon)"
   >
     <img
       [src]="pokemon.sprites.other.home.front_default"
@@ -38,8 +39,8 @@
     color="primary"
     type="submit"
     class="save-btn"
-    (click)="continue()"
-    [disabled]="isSaveDisabled()"
+    [disabled]="(selectedPokemon$ | async)?.length !== 3"
+    (click)="savePokemon()"
   >
     Guardar
   </button>

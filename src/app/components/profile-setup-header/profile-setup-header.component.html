@@ -1,12 +1,4 @@
 <div class="container">
-  <span class="block-arrow-title">
-    <mat-icon
-      aria-hidden="false"
-      aria-label="arrow left"
-      fontIcon="keyboard_arrow_left"
-      class="arrow-left-icon"
-    ></mat-icon>
-    <p class="title">{{ title }}</p>
-  </span>
-  <p class="subtitle">{{ subtitle }}</p>
+  <ng-content select=".step-label"></ng-content>
+  <ng-content select=".gretting-button"></ng-content>
 </div>

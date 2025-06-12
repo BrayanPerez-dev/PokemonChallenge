@@ -4,24 +4,50 @@
     <app-loading></app-loading>
     }@else{
 
-    <app-profile-setup-header
-      [title]="
-        userExists ? '¡Ya casi términamos!' : '¡Hola! Configuremos tu perfil'
-      "
-      [subtitle]="
-        userExists
-          ? 'Revisa la información, y completa lo solicitado.'
-          : 'Queremos conocerte mejor.'
-      "
-    ></app-profile-setup-header>
+    <app-profile-setup-header>
+      @if(!showStepLabel){
+      <div class="step-label">
+        <span class="block-arrow-title">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="arrow left"
+            fontIcon="keyboard_arrow_left"
+            class="arrow-left-icon"
+          ></mat-icon>
+          <p class="title">
+            {{
+              userExists
+                ? "¡Ya casi términamos!"
+                : "¡Hola! Configuremos tu perfil"
+            }}
+          </p>
+        </span>
+        <p class="subtitle">
+          {{
+            userExists
+              ? "Revisa la información, y completa lo solicitado."
+              : "Queremos conocerte mejor."
+          }}
+        </p>
+      </div>
+      } @if(hasPokemon$ | async){
+      <div class="gretting-button">
+        <p class="gretting">¡Hola {{ userInfo?.name }}!</p>
+        <app-button>
+          <mat-icon class="prefix-icon">edit</mat-icon>
+          <p class="text">Editar perfil</p>
+        </app-button>
+      </div>
+      }
+    </app-profile-setup-header>
 
     <section>
       <app-profile-picture></app-profile-picture>
-      @if(userExists){ @if(pokemons.length > 0){
+      @if(userExists){ @if(hasPokemon$ | async){
       <app-list-saved-pokemon></app-list-saved-pokemon>
-      }@else{
+      } @else {
       <app-pokemon-list></app-pokemon-list>
-      } }@else{
+      }}@else{
       <app-user-profile-form></app-user-profile-form>
       }
     </section>

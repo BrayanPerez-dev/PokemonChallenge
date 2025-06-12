@@ -15,7 +15,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { firstValueFrom, map, Observable, startWith } from 'rxjs';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -40,6 +40,8 @@ import { LoadingService } from '../../services/Loading/loading.service';
     MatIconModule,
     MatAutocompleteModule,
     AsyncPipe,
+    MatInputModule,
+    MatNativeDateModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './user-profile-form.component.html',
@@ -56,21 +58,29 @@ export class UserProfileFormComponent implements OnInit {
     'Jugar Videojuegos',
   ];
   hobbies: string[] = [];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  isAdult: boolean = false;
+  maxDate: Date;
 
   userForm!: FormGroup<IUserForm>;
   hobbieCtrl = new FormControl('');
-  separatorKeysCodes: number[] = [ENTER, COMMA];
   errorMessage = '';
-  isAdult: boolean = false;
 
   fb = inject(FormBuilder);
   announcer = inject(LiveAnnouncer);
   private userService = inject(UserInfoService);
   private loadingService = inject(LoadingService);
+
   filteredHobbies!: Observable<string[]>;
 
   @ViewChild('hobbieInput') hobbieInput!: ElementRef<HTMLInputElement>;
 
+  constructor(){
+    const today = new Date();
+    const yearsAgo = 2;
+    this.maxDate = new Date(today.getFullYear() - yearsAgo, today.getMonth(), today.getDate());
+
+  }
   ngOnInit() {
     this.userForm = this.fb.nonNullable.group({
       name: this.fb.nonNullable.control('', [
@@ -85,7 +95,7 @@ export class UserProfileFormComponent implements OnInit {
       const duiControl = this.userForm.get('dui');
       const carnetControl = this.userForm.get('minority_card');
 
-      if (this.isAdult ) {
+      if (this.isAdult) {
         duiControl?.setValidators([Validators.required, duiValidator]);
         carnetControl?.clearValidators();
         carnetControl?.reset();
@@ -167,7 +177,7 @@ export class UserProfileFormComponent implements OnInit {
         ...this.userForm.value,
         hobbies: this.hobbies,
       });
-      const { name, birthday, dui,minority_card } = this.userForm.value;
+      const { name, birthday, dui, minority_card } = this.userForm.value;
       let photo: string | null = this.userService.getUserPhoto()
 
 
@@ -191,7 +201,6 @@ export class UserProfileFormComponent implements OnInit {
         .subscribe({
           next: (res) => {
             console.log('User information saved:', res);
-            this.loadingService.hide();
             this.announcer.announce(
               'Perfil actualizado correctamente',
               'assertive'
@@ -199,6 +208,12 @@ export class UserProfileFormComponent implements OnInit {
             this.userForm.reset();
             this.hobbies = [];
           },
+          error: (err) => {
+            console.error('error:', err);
+          },
+          complete: () => {
+            this.loadingService.hide();
+          }
         });
     } else {
       // Mark all fields as touched to show errors
