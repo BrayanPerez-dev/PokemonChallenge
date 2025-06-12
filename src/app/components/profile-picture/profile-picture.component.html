@@ -28,7 +28,8 @@
           }
         </div>
       </div>
-      @if(userInfo?.name){
+      
+      @if(userInfo?.name && !(isEditing$ | async)){
       <app-user-info></app-user-info>
       }@else{
       <app-image-upload

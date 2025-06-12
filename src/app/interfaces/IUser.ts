@@ -13,4 +13,5 @@ export interface IUser {
   hobbies?: string[];
   photo: string;
   minority_card?:string | null;
+  raw_birthday:string;
 }

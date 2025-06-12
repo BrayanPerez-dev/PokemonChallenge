@@ -1,19 +1,23 @@
-<span class="container-text"
-  ><p class="label">Pasatiempo:</p>
-  <p class="value">{{ userInfo?.hobbies?.toString() }}</p></span
->
-<span class="container-text"
-  ><p class="label">Edad:</p>
-  <p class="value">{{ userInfo?.birthday }}</p></span
->
+@if(userInfo?.hobbies?.length){
+<span class="container-text">
+  <p class="label">Pasatiempo:</p>
+  <p class="value">{{ userInfo?.hobbies?.toString() }}</p>
+</span>
+}
+
+<span class="container-text">
+  <p class="label">Edad:</p>
+  <p class="value">{{ userInfo?.birthday }}</p>
+</span>
+
 @if(userInfo?.dui){
-<span class="container-text"
-  ><p class="label">DUI:</p>
-  <p class="value">{{ userInfo?.dui }}</p></span
->
+<span class="container-text">
+  <p class="label">DUI:</p>
+  <p class="value">{{ userInfo?.dui }}</p>
+</span>
 } @if(userInfo?.minority_card){
-<span class="container-text"
-  ><p class="label">C. de Minoridad:</p>
-  <p class="value">{{ userInfo?.minority_card }}</p></span
->
+<span class="container-text">
+  <p class="label">C. de Minoridad:</p>
+  <p class="value">{{ userInfo?.minority_card }}</p>
+</span>
 }

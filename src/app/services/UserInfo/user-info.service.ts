@@ -11,6 +11,8 @@ export class UserInfoService {
     this.getFromStorage()
   );
 
+  isEditing$ = new BehaviorSubject<boolean>(false)
+
   private userPhoto = new BehaviorSubject<string | null>(null);
   user$ = this.userSubject.asObservable();
   userPhoto$ = this.userPhoto.asObservable();
@@ -22,6 +24,15 @@ export class UserInfoService {
       this.userSubject.next(userFromStorage);
     }
   }
+  
+  startEdit() {
+    this.isEditing$.next(true);
+  }
+
+  finishEdit() {
+    this.isEditing$.next(false);
+  }
+
   setUser(user: IUser): Observable<string> {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
     this.userSubject.next(user);

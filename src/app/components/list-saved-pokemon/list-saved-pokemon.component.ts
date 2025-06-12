@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-list-saved-pokemon',
-  imports: [StatsComponent,ButtonComponent,MatIconModule],
+  imports: [StatsComponent, ButtonComponent, MatIconModule],
   templateUrl: './list-saved-pokemon.component.html',
   styleUrl: './list-saved-pokemon.component.scss'
 })
@@ -16,14 +16,18 @@ export class ListSavedPokemonComponent implements OnInit {
   pokemon: IPokemon[] = []
 
   ngOnInit(): void {
-     this.selectedPokemonService.selectedPokemons$.subscribe({
-      next:(pokemon) => {
+    this.selectedPokemonService.selectedPokemons$.subscribe({
+      next: (pokemon) => {
         this.pokemon = pokemon;
       },
     });
   }
+  
+  startEdit() {
+    this.selectedPokemonService.startEdit();
+  }
 
-  setTypes(pokemon:IPokemon):string{
-  return  pokemon.types.map((t)=> t.type.name).join('/');
+  setTypes(pokemon: IPokemon): string {
+    return pokemon.types.map((t) => t.type.name).join('/');
   }
 }

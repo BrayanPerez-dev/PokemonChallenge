@@ -37,8 +37,10 @@ export class SettingsComponent implements OnInit {
 
   loading$ = this.loadingService.loading$;
   hasPokemon$ = this.selectedPokemonService.hasThreePokemons$;
-  
-  showStepLabel:boolean = false
+  isEditing$ = this.userService.isEditing$;
+  isEditingPokemon$ = this.selectedPokemonService.isEditing$;
+
+  showStepLabel:boolean = false;
   userExists: boolean = false;
   userInfo:IUser | null = null;
 
@@ -56,11 +58,12 @@ export class SettingsComponent implements OnInit {
     
     this.selectedPokemonService.hasThreePokemons$.subscribe({
       next:(pokemon)=>{
-        console.log(pokemon)
         this.showStepLabel = pokemon
       }
     })
-
   }
 
+  startEdit(){
+    this.userService.startEdit()
+  }
 }

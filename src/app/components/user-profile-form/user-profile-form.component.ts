@@ -70,18 +70,48 @@ export class UserProfileFormComponent implements OnInit {
   announcer = inject(LiveAnnouncer);
   private userService = inject(UserInfoService);
   private loadingService = inject(LoadingService);
-
+  isEditing$ = this.userService.isEditing$
+  userInfo$ = this.userService.user$
   filteredHobbies!: Observable<string[]>;
 
   @ViewChild('hobbieInput') hobbieInput!: ElementRef<HTMLInputElement>;
 
-  constructor(){
+  constructor() {
     const today = new Date();
     const yearsAgo = 2;
     this.maxDate = new Date(today.getFullYear() - yearsAgo, today.getMonth(), today.getDate());
-
   }
+
   ngOnInit() {
+    this.loadFormControls();
+    this.checkBirthday();
+    this.setFilteredHobbies();
+    this.setSavedFormValues()
+  }
+
+  setSavedFormValues(): void {
+    const isEditing = this.isEditing$.getValue()
+
+    if (isEditing) {
+      this.userInfo$.subscribe(({
+        next: (user) => {
+          this.userForm.patchValue({
+            name: user?.name,
+            birthday: user?.raw_birthday,
+            dui: user?.dui ?? '',
+            minority_card: user?.minority_card ?? ''
+          });
+          this.userService.setUserPhoto(user?.photo ?? '')
+          this.hobbies = user?.hobbies ?? [];
+        }
+      }))
+
+    }
+  }
+
+
+
+  loadFormControls(): void {
     this.userForm = this.fb.nonNullable.group({
       name: this.fb.nonNullable.control('', [
         Validators.required,
@@ -90,6 +120,9 @@ export class UserProfileFormComponent implements OnInit {
       dui: this.fb.nonNullable.control('', [duiValidator]),
       minority_card: this.fb.nonNullable.control('')
     });
+  }
+
+  checkBirthday() {
     this.userForm.get('birthday')?.valueChanges.subscribe(value => {
       this.isAdult = this.translateDateToYears(value as string).isAdult
       const duiControl = this.userForm.get('dui');
@@ -107,7 +140,9 @@ export class UserProfileFormComponent implements OnInit {
       duiControl?.updateValueAndValidity();
       carnetControl?.updateValueAndValidity();
     })
+  }
 
+  setFilteredHobbies(): void {
     this.filteredHobbies = this.hobbieCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) =>
@@ -193,6 +228,7 @@ export class UserProfileFormComponent implements OnInit {
         .setUser({
           name: name as string,
           birthday: this.translateDateToYears(birthday as string).label,
+          raw_birthday: birthday as string,
           dui: dui as string,
           hobbies: this.hobbies,
           photo: photo,
@@ -205,6 +241,7 @@ export class UserProfileFormComponent implements OnInit {
               'Perfil actualizado correctamente',
               'assertive'
             );
+            this.userService.finishEdit()
             this.userForm.reset();
             this.hobbies = [];
           },

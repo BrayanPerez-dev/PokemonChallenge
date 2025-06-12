@@ -12,9 +12,18 @@ export class SelectedPokemonService {
   
   selectedPokemons$ = this.selectedPokemonsSubject.asObservable();
   hasThreePokemons$ = this.hasThreePokemonsSubject.asObservable();
+  isEditing$ = new BehaviorSubject<boolean>(false)
 
   constructor() {
     this.initializeFromLocalStorage();
+  }
+  
+  startEdit() {
+    this.isEditing$.next(true);
+  }
+
+  finishEdit() {
+    this.isEditing$.next(false);
   }
 
   initializeFromLocalStorage(): void {

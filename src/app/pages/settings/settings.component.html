@@ -3,7 +3,6 @@
     @if(loading$ | async){
     <app-loading></app-loading>
     }@else{
-
     <app-profile-setup-header>
       @if(!showStepLabel){
       <div class="step-label">
@@ -33,23 +32,30 @@
       } @if(hasPokemon$ | async){
       <div class="gretting-button">
         <p class="gretting">¡Hola {{ userInfo?.name }}!</p>
-        <app-button>
+        @if(!(isEditing$ | async) && !(isEditingPokemon$ | async)){
+        <app-button (click)="startEdit()">
           <mat-icon class="prefix-icon">edit</mat-icon>
           <p class="text">Editar perfil</p>
         </app-button>
+        }
       </div>
       }
     </app-profile-setup-header>
 
     <section>
       <app-profile-picture></app-profile-picture>
-      @if(userExists){ @if(hasPokemon$ | async){
+
+      @if(isEditing$ | async){
+      <app-user-profile-form></app-user-profile-form>
+      }@else{ @if(userExists){ @if(isEditingPokemon$ | async){
+      <app-pokemon-list></app-pokemon-list>
+      }@else if(hasPokemon$ | async ){
       <app-list-saved-pokemon></app-list-saved-pokemon>
       } @else {
       <app-pokemon-list></app-pokemon-list>
-      }}@else{
+      } }@else{
       <app-user-profile-form></app-user-profile-form>
-      }
+      } }
     </section>
     }
   </div>

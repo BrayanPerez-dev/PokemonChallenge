@@ -55,13 +55,8 @@ export class PokemonListComponent implements OnInit {
   savePokemon(): void {
     this.loadingService.show();
     this.selectedPokemonService.saveToLocalStorage().subscribe({
-      next: (message) => {
-        console.log(message); 
-      },
-      error: (err) => {
-        console.error('error:', err);
-      },
       complete: () => {
+        this.selectedPokemonService.finishEdit()
         this.loadingService.hide();
       }
     });
@@ -117,7 +112,6 @@ export class PokemonListComponent implements OnInit {
         );
         forkJoin(requests).subscribe((details: IPokemon[]) => {
           this.pokemonList = details;
-          console.log(details);
         });
         this.errorMessage = '';
       },
