@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
 import { IPokemon, IPokemonList } from '../../interfaces/IPokemon';
 import {
@@ -16,10 +16,11 @@ import { SelectedPokemonService } from '../../services/SelectedPokemon/selected-
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoadingService } from '../../services/Loading/loading.service';
 import { MatIconModule } from '@angular/material/icon';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-pokemon-list',
-  imports: [FormsModule, CommonModule,MatIconModule, AsyncPipe],
+  imports: [FormsModule, CommonModule, MatIconModule, AsyncPipe, ScrollingModule, CommonModule],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss',
   standalone: true,
@@ -29,7 +30,11 @@ export class PokemonListComponent implements OnInit {
   private selectedPokemonService = inject(SelectedPokemonService)
   private loadingService = inject(LoadingService);
 
+
   pokemonList: IPokemon[] = [];
+  private pageSize = 9;
+  private page = 0;
+  @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
   searchTerm: string = '';
   errorMessage: string = '';
   selectedPokemon$ = this.selectedPokemonService.selectedPokemons$;
@@ -41,6 +46,7 @@ export class PokemonListComponent implements OnInit {
     this.loadDefaultPokemons();
     // Subscription with con debounce
     this.startDebounce();
+
   }
 
   togglePokemon(pokemon: IPokemon): void {
@@ -102,16 +108,27 @@ export class PokemonListComponent implements OnInit {
         },
       });
   }
-
+  trackByName(index: number, pokemon: IPokemon) {
+  return pokemon.name;
+}
+  onScroll() {
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    if (end === total && total > 0) {
+      this.loadDefaultPokemons();
+    }
+  }
   loadDefaultPokemons() {
-    this.pokemonService.getPokemonList().subscribe({
+    this.pokemonService.getPokemonList(this.page * this.pageSize, this.pageSize).subscribe({
       next: (data: IPokemonList) => {
         const pokemons = data.results;
         const requests = pokemons.map((p) =>
           this.pokemonService.getPokemonDetails(p.url)
         );
+
         forkJoin(requests).subscribe((details: IPokemon[]) => {
-          this.pokemonList = details;
+          this.pokemonList = [...this.pokemonList, ...details];
+          this.page++;
         });
         this.errorMessage = '';
       },

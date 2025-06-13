@@ -1,59 +1,89 @@
 # PokemonChallenge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Web application developed with Angular for managing user profiles and hobbies and pokemon, featuring Angular Material integration and dynamic validations.
 
-## Development server
+---
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- User profile registration and editing (name, date of birth, DUI, minority card, hobbies, photo).
+- Automatic validations based on user age.
+- Hobby management with chips and autocomplete.
+- Profile photo upload and display.
+- Modern interface using Angular Material.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Prerequisites
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [Angular CLI](https://angular.io/cli) (v16 or higher)
+- [Git](https://git-scm.com/) (optional, to clone the repository)
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation and Development
 
-```bash
-ng generate --help
-```
+1. **Clone the repository:**
 
-## Building
+   ```bash
+   git clone https://github.com/your-username/pokemon-challenge.git
+   cd pokemon-challenge
+   ```
 
-To build the project run:
+2. **Install dependencies:**
 
-```bash
-ng build
-```
+   ```bash
+   npm install
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. **Start the application in development mode:**
 
-## Running unit tests
+   ```bash
+   ng serve
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+4. **Open your browser at:**
 
-```bash
-ng test
-```
+   ```
+   http://localhost:4200
+   ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Environment Variables Configuration
 
-```bash
-ng e2e
-```
+Before running the project, you must configure your credentials and endpoints in the environment files:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+1. Edit the `environment.ts` and `environment.prod.ts` files and add your API key and URL:
 
-## Additional Resources
+You must visit https://es.imgbb.com/ to obtain your credentials.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   ```typescript
+   export const environment = {
+     production: false,
+     API_KEY: "YOUR_API_KEY_HERE",
+     API_URL: "YOUR_API_URL_HERE",
+   };
+   ```
+
+---
+
+## Project Structure
+
+- `src/app/components/` — UI components (forms, lists, etc.).
+- `src/app/services/` — Business logic and data services.
+- `src/app/interfaces/` — Type and interface definitions.
+- `src/app/validators/` — Custom validators.
+
+---
+
+## Customization
+
+- You can modify the list of hobbies in `user-profile-form.component.ts`.
+
+---
+
+## Support
+
+If you have questions or issues, open an issue in the repository or contact

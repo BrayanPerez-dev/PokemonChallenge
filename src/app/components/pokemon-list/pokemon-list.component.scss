@@ -55,8 +55,25 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 50px 75px;
     margin-top: 50px;
+    height: 400px;
+    width: 100%;
+    overflow: auto;
 }
 
+.pokedex-viewport {
+    height: 400px;
+}
+
+
+.pokedex-viewport::ng-deep .cdk-virtual-scroll-content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    gap: 20px 20px;
+    height: 400px;
+    width: 100%;
+    padding-top: 20px;
+}
 
 .pokemon {
     display: flex;
@@ -67,6 +84,7 @@
     height: 96px;
     border-radius: 20px;
     background-color: var(--neutral-color-grey-10);
+
 }
 
 .pokemon-selected {
@@ -75,7 +93,6 @@
 
 .pokemon-sprite {
     width: 100px;
-    margin-bottom: 20px;
 }
 
 .chip {
@@ -145,10 +162,17 @@ button:disabled {
         gap: 40px;
     }
 
-
+    .pokedex-viewport::ng-deep .cdk-virtual-scroll-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+        height: 600px;
+    }
 
     .search-container {
-       margin-left: 20px;
+        margin-left: 20px;
     }
 
     .search-input {

@@ -1,6 +1,6 @@
 <div class="container-title">
-<p class="title">Pokémon</p>
-<p class="subtitle">Selecciona 3 Pokémon para que sean parte de tu equipo</p>
+  <p class="title">Pokémon</p>
+  <p class="subtitle">Selecciona 3 Pokémon para que sean parte de tu equipo</p>
 </div>
 <div class="search-container">
   <div class="input-with-icon">
@@ -15,7 +15,28 @@
   </div>
 </div>
 
-<div class="pokemon-list">
+<cdk-virtual-scroll-viewport itemSize="100" class="pokedex-viewport" (scrolledIndexChange)="onScroll()">
+  <div *cdkVirtualFor="let pokemon of pokemonList;index as i; trackBy: trackByName">
+    
+   <div
+    [ngClass]="isSelected(pokemon) ? 'pokemon pokemon-selected' : 'pokemon' "
+    (click)="togglePokemon(pokemon)"
+  >
+    <img
+      [src]="pokemon.sprites.other.home.front_default"
+      alt="{{ pokemon.name }}"
+      class="pokemon-sprite"
+    />
+    <div class="chip">
+      <p class="pokemon-name">
+         #{{ (i + 1).toString().padStart(3, "0") }} {{ pokemon.name }}
+      </p>
+    </div>
+  </div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<!-- <div class="pokemon-list">
   @for(pokemon of (pokemonList); track pokemon.name; let i = $index){
   <div
     [ngClass]="isSelected(pokemon) ? 'pokemon pokemon-selected' : 'pokemon'"
@@ -33,7 +54,7 @@
     </div>
   </div>
   }
-</div>
+</div> -->
 
 <div class="button-container">
   <button

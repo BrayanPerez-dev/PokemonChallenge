@@ -8,11 +8,11 @@ import { IPokemon, IPokemonList } from '../../interfaces/IPokemon';
 })
 export class PokemonService {
   private apiUrlPokemonList =
-    'https://pokeapi.co/api/v2/pokemon?limit=9&offset=0';
+    'https://pokeapi.co/api/v2/pokemon';
   private http = inject(HttpClient);
 
-  getPokemonList(): Observable<IPokemonList> {
-    return this.http.get<IPokemonList>(this.apiUrlPokemonList);
+  getPokemonList(page:number=0,pageSize:number=9): Observable<IPokemonList> {
+    return this.http.get<IPokemonList>(`${this.apiUrlPokemonList}?limit=${pageSize}&offset=${page}`);
   }
 
   getPokemonDetails(url: string): Observable<IPokemon> {

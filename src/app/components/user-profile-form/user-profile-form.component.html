@@ -33,7 +33,7 @@
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         (matChipInputTokenEnd)="add($event)"
       />
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
         @for (hobbie of filteredHobbies | async; track hobbie) {
         <mat-option [value]="hobbie">
           <div
@@ -87,7 +87,7 @@
     } @if(!isAdult){
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Carnet de Minoridad</mat-label>
-      <input matInput formControlName="minority_card" placeholder="000000000" />
+      <input matInput formControlName="minority_card" placeholder="00000-00000" />
     </mat-form-field>
     } @if (errorMessage) {
     <div class="error-message">
