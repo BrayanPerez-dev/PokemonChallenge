@@ -14,7 +14,9 @@
     gap: 20px;
     overflow-y: scroll;
     height: 600px;
+    margin-bottom: 20px;
 }
+
 .title-button{
     display: flex;
     justify-content: space-between;
@@ -45,6 +47,7 @@
     box-shadow: 0px 8px 28px 0px #78B1B51A;
     padding: 10px;
     background-color: var(--neutral-color-grey-10);
+    gap:20px;
 }
 
 .profile {
@@ -73,5 +76,12 @@
     line-height: 100%;
     color: #000000;
     margin: 0px;
+}
 
+/* Responsive */
+@media (max-width: 480px) {
+    .card-pokemon {
+        justify-content: center;
+        width: 325px;
+    }
 }

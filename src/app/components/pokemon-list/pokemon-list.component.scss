@@ -1,7 +1,6 @@
 .title {
     font-weight: 400;
     font-size: 30px;
-    line-height: 48px;
     color: var(--primary-color-blue-0);
     margin: 0px;
 }
@@ -9,34 +8,33 @@
 .subtitle {
     font-weight: 400;
     font-size: 18px;
-    line-height: 100%;
     color: var(--neutral-color-grey-40);
 }
 
 .input-with-icon {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .input-with-icon .icon {
-  position: absolute;
-  left: 10px;
-  top: 60%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--primary-color-blue-0);
-  font-size: 16px;
-  font-weight: 600;
+    position: absolute;
+    left: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--primary-color-blue-0);
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .search-input {
-  padding-left: 30px;
-  height: 30px;
-  font-size: 14px;
+    padding-left: 30px;
+    height: 30px;
+    font-size: 14px;
 }
 
 .search-input {
-    width: 521px;
+    width: 600px;
     height: 36px;
     border-radius: 10px;
     background-color: var(--neutral-color-grey-10);
@@ -55,10 +53,10 @@
 .pokemon-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 75px;
-    grid-row-gap: 50px;
+    gap: 50px 75px;
     margin-top: 50px;
 }
+
 
 .pokemon {
     display: flex;
@@ -117,7 +115,8 @@
     font-size: 18px;
     line-height: 22px;
     letter-spacing: 0px;
-    border: 0px ;
+    border: 0px;
+    margin-bottom: 10px;
 }
 
 button:disabled {
@@ -127,10 +126,40 @@ button:disabled {
 }
 
 .error-message {
-     margin-top: 16px;
-     padding: 12px;
-     background-color: var(--primary-color-blue-0);
-     color: #FFFFFF;
-     border-radius: 4px;
-     border-left: 4px solid var(--primary-color-orange-20);
- }
+    margin-top: 16px;
+    padding: 12px;
+    background-color: var(--primary-color-blue-0);
+    color: #FFFFFF;
+    border-radius: 4px;
+    border-left: 4px solid var(--primary-color-orange-20);
+}
+
+/* Responsive */
+
+@media (max-width: 650px) {
+    .pokemon-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+    }
+
+
+
+    .search-container {
+       margin-left: 20px;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .container-title {
+        margin-left: 20px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+}
