@@ -51,6 +51,34 @@ Web application developed with Angular for managing user profiles and hobbies an
 
 ---
 
+...existing code...
+
+---
+
+## Running with Docker
+
+You can run the application in a production-like environment using Docker:
+
+1. **Build the Docker image:**
+
+   ```bash
+   docker build -t pokemon-app .
+   ```
+
+2. **Run the Docker container:**
+
+   ```bash
+   docker run -d -p 4200:80 pokemon-app
+   ```
+
+3. **Open your browser at:**
+
+   ```
+   http://localhost:4200
+   ```
+
+---
+
 ## Environment Variables Configuration
 
 Before running the project, you must configure your credentials and endpoints in the environment files:
